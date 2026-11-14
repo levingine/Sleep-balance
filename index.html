@@ -1,127 +1,143 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>koredify Login</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: #000000;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-box {
-            width: 90%;
-            max-width: 380px;
-            padding: 35px 25px;
-            background: #111827;
-            border: 1px solid #ff0000;
-            border-radius: 18px;
-            box-shadow: 0 0 25px #39ff8840;
-            text-align: center;
-            animation: appear 1s ease;
-        }
-
-        .ghost {
-            font-size: 55px;
-            animation: float 2s infinite alternate;
-        }
-
-        h1 {
-            color: #ff0000;
-            letter-spacing: 2px;
-        }
-
-        p {
-            color: #aab3c5;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            margin: 10px 0;
-            background: #080b12;
-            color: white;
-            border: 1px solid #35445a;
-            border-radius: 8px;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 15px;
-            background: #FF0000;
-            color: #FFFFFF;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #ff0000;
-            color: white;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(-12px);
-            }
-        }
-
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-      .signup {
-            color: blue;
-}
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131d">
+<title>Sleep Balance</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1018;--panel:#171c29;--panel2:#20283a;--text:#eef2ff;--muted:#a5aec4;--accent:#9b8cff;--good:#63d6a2;--bad:#ff8585;--line:#30394d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#262044 0,transparent 35%),var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:22px 14px 40px}
+main{max-width:720px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase}h1{font-size:29px;margin:3px 0 0}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:12px}
+.card{background:rgba(23,28,41,.94);border:1px solid var(--line);border-radius:18px;padding:18px;margin:13px 0;box-shadow:0 12px 35px #0002}
+.balance{display:grid;grid-template-columns:1fr 1fr;gap:12px}.balance .big{font-size:32px;font-weight:800;letter-spacing:-1px;margin:4px 0}.muted{color:var(--muted);font-size:13px}.positive{color:var(--good)}.negative{color:var(--bad)}
+h2{font-size:17px;margin:0 0 13px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:13px;padding:14px 10px;font-size:15px;font-weight:750;cursor:pointer}.primary{background:var(--accent);color:#111322}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.status{padding:12px;border-radius:12px;background:var(--panel2);margin-top:12px;color:var(--muted);font-size:14px}.status strong{color:var(--text)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--panel2);padding:13px;border-radius:13px}.stat b{display:block;font-size:20px;margin-top:4px}
+.history{display:flex;flex-direction:column;gap:9px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--panel2);border-radius:12px;padding:12px}.row strong{display:block}.row small{color:var(--muted)}.delta{font-weight:800;white-space:nowrap}.delete{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:5px 8px;margin-left:8px}
+.note{font-size:12px;color:var(--muted);margin-top:12px}.tools{display:flex;gap:8px;flex-wrap:wrap}.tools button{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+.empty{color:var(--muted);text-align:center;padding:18px 6px}
+@media(max-width:420px){.balance .big{font-size:27px}.top{align-items:flex-start}.tag{font-size:11px}}
+</style>
 </head>
-
 <body>
+<main>
+  <header class="top">
+    <div><div class="eyebrow">Your personal tracker</div><h1>Sleep Balance</h1></div>
+    <div class="tag">8-hour daily target</div>
+  </header>
 
-    <div class="login-box">
+  <section class="card balance">
+    <div><div class="muted">Lifetime balance</div><div class="big" id="balance">0h 00m</div><div class="muted" id="balanceLabel">Right on target</div></div>
+    <div><div class="muted">Total sleep logged</div><div class="big" id="total">0h</div><div class="muted" id="days">0 days recorded</div></div>
+  </section>
 
-        <div class="ghost">
-💻</div>
-
-        <h1>KOREDIFY</h1>
-
-        <p>Welcome back, online earner.</p>
-
-        <form>
-            <input type="text" placeholder="Enter Username">
-
-            <input type="password" placeholder="Enter Password">
-
-            <button type="button">LOGIN</button>
-<div class="signup">
-<h6> don't have an account yet? click here to sign up</h6>
-</div>
-        </form>
-
-        <p>Secure Login Portal</p>
-
+  <section class="card">
+    <h2>Register your sleep</h2>
+    <div class="buttons">
+      <button class="btn primary" id="sleepBtn">🌙 I'm going to sleep</button>
+      <button class="btn secondary" id="wakeBtn">☀️ I'm awake</button>
     </div>
+    <div class="status" id="status">No active sleep session. Register when you're ready to sleep.</div>
+    <div class="note">The clock time is recorded automatically. Your balance is calculated when you register that you're awake.</div>
+  </section>
 
+  <section class="card">
+    <h2>Overview</h2>
+    <div class="grid">
+      <div class="stat"><span class="muted">Average per recorded day</span><b id="average">—</b></div>
+      <div class="stat"><span class="muted">Days above 8 hours</span><b id="above">0</b></div>
+      <div class="stat"><span class="muted">Days below 8 hours</span><b id="below">0</b></div>
+      <div class="stat"><span class="muted">Days at 8 hours</span><b id="exact">0</b></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Sleep history</h2>
+    <div class="history" id="history"><div class="empty">Your completed sleep sessions will appear here.</div></div>
+    <div class="note">Sessions are grouped by the date you wake up. Multiple sleep sessions on the same date are added together before comparing with 8 hours.</div>
+  </section>
+
+  <section class="card">
+    <h2>Your data</h2>
+    <div class="tools">
+      <button id="exportBtn">Export backup</button>
+      <button id="importBtn">Import backup</button>
+      <button id="clearBtn">Clear all data</button>
+      <input id="fileInput" type="file" accept="application/json" hidden>
+    </div>
+    <div class="note">Your records stay in this browser on this device. Export a backup occasionally, especially before clearing browser data or changing phones.</div>
+  </section>
+</main>
+<script>
+const KEY='sleepBalanceRecords_v1', ACTIVE='sleepBalanceActive_v1';
+const $=id=>document.getElementById(id);
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}};
+let records=load();
+let active=null;
+try{active=JSON.parse(localStorage.getItem(ACTIVE)||'null')}catch{}
+const pad=n=>String(n).padStart(2,'0');
+function duration(ms){const mins=Math.max(0,Math.round(ms/60000));return `${Math.floor(mins/60)}h ${pad(mins%60)}m`}
+function signed(ms){const sign=ms>0?'+':ms<0?'−':'';return sign+duration(Math.abs(ms))}
+function save(){localStorage.setItem(KEY,JSON.stringify(records))}
+function dayKey(iso){const d=new Date(iso);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function groupDays(){
+ const map={};
+ records.forEach(r=>{const k=dayKey(r.end);map[k]=(map[k]||0)+(new Date(r.end)-new Date(r.start))});
+ return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
+}
+function render(){
+ const days=groupDays(), total=days.reduce((s,[,v])=>s+v,0), balance=days.reduce((s,[,v])=>s+v-8*3600000,0);
+ $('balance').textContent=signed(balance);
+ $('balance').className='big '+(balance>0?'positive':balance<0?'negative':'');
+ $('balanceLabel').textContent=balance>0?'Above your cumulative 8-hour target':balance<0?'Below your cumulative 8-hour target':'Right on target';
+ $('total').textContent=(total/3600000).toFixed(1)+'h';
+ $('days').textContent=`${days.length} ${days.length===1?'day':'days'} recorded`;
+ $('average').textContent=days.length?duration(total/days.length):'—';
+ $('above').textContent=days.filter(([,v])=>v>8*3600000).length;
+ $('below').textContent=days.filter(([,v])=>v<8*3600000).length;
+ $('exact').textContent=days.filter(([,v])=>v===8*3600000).length;
+ $('sleepBtn').disabled=!!active;$('wakeBtn').disabled=!active;
+ if(active){$('status').innerHTML=`Sleep session started: <strong>${new Date(active).toLocaleString()}</strong><br>Timer running. Register when you're awake.`}
+ else $('status').textContent='No active sleep session. Register when you’re ready to sleep.';
+ const hist=$('history');hist.innerHTML='';
+ if(!days.length){hist.innerHTML='<div class="empty">Your completed sleep sessions will appear here.</div>';return}
+ days.slice().reverse().forEach(([date,ms])=>{
+  const delta=ms-8*3600000, item=document.createElement('div');item.className='row';
+  const left=document.createElement('div'), right=document.createElement('div');
+  const strong=document.createElement('strong');strong.textContent=new Date(date+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const small=document.createElement('small');small.textContent=duration(ms)+' slept';
+  left.append(strong,small);
+  const val=document.createElement('span');val.className='delta '+(delta>0?'positive':delta<0?'negative':'');val.textContent=signed(delta);
+  const del=document.createElement('button');del.className='delete';del.textContent='Delete';del.setAttribute('aria-label','Delete records for '+date);
+  del.onclick=()=>{if(confirm('Delete all sleep sessions waking up on '+date+'?')){records=records.filter(r=>dayKey(r.end)!==date);save();render()}};
+  right.append(val,del);item.append(left,right);hist.append(item);
+ });
+}
+$('sleepBtn').onclick=()=>{
+ if(active)return;
+ active=new Date().toISOString();localStorage.setItem(ACTIVE,JSON.stringify(active));render();
+};
+$('wakeBtn').onclick=()=>{
+ if(!active)return;
+ const end=new Date().toISOString(),start=new Date(active);
+ if(new Date(end)<=start){alert('The wake-up time must be after the sleep start.');return}
+ records.push({start:active,end});save();active=null;localStorage.removeItem(ACTIVE);render();
+};
+$('exportBtn').onclick=()=>{
+ const blob=new Blob([JSON.stringify({version:1,records,active},null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sleep-balance-backup.json';a.click();URL.revokeObjectURL(a.href);
+};
+$('importBtn').onclick=()=>$('fileInput').click();
+$('fileInput').onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{const data=JSON.parse(await f.text());if(!Array.isArray(data.records)||!data.records.every(r=>r.start&&r.end&&Number.isFinite(Date.parse(r.start))&&Number.isFinite(Date.parse(r.end))&&Date.parse(r.end)>Date.parse(r.start)))throw Error();
+ if(!confirm('Replace your current records with this backup?'))return;
+ records=data.records;save();active=data.active||null;if(active)localStorage.setItem(ACTIVE,JSON.stringify(active));else localStorage.removeItem(ACTIVE);render();alert('Backup restored.');
+ }catch{alert('That backup file is not valid. Your current data has not been changed.')}e.target.value='';
+};
+$('clearBtn').onclick=()=>{if(confirm('Permanently clear all sleep records and the active timer on this device?')){records=[];active=null;save();localStorage.removeItem(ACTIVE);render()}};
+render();
+</script>
 </body>
 </html>
